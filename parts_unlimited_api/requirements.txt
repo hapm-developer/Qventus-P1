@@ -1,0 +1,14 @@
+# FastAPI
+# --------------------------------------------------------------------------------------------------
+fastapi==0.111.0  # https://github.com/tiangolo/fastapi
+
+pydantic==2.7.4  # https://github.com/pydantic/pydantic
+uvicorn==0.30.1  # https://github.com/encode/uvicorn
+python-dotenv==1.0.1  # https://github.com/theskumar/python-dotenv
+
+# Logging
+loguru==0.6.0  # https://github.com/Delgan/loguru
+
+# DB
+alembic==1.8.1  # https://github.com/sqlalchemy/alembic
+
