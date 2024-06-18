@@ -83,3 +83,55 @@ def test_delete_nonexistent_part(
     nonexistent_id = max_id[0] + 100 if max_id else 1
     response = client.delete(f"{settings.api_v1_prefix}/parts/delete/{nonexistent_id}")
     assert response.status_code == 404
+
+
+def test_read_parts(client: TestClient, db_session: Session, settings: AppSettings) -> None:
+    # Creating some parts
+    for i in range(15):
+        client.post(
+            f"{settings.api_v1_prefix}/parts/create/",
+            json={
+                "name": f"Part {i}",
+                "sku": f"SKU{i}",
+                "description": f"This is part {i}",
+                "weight_ounces": i * 10,
+            },
+        )
+
+    # list with pagination
+    response = client.get(f"{settings.api_v1_prefix}/parts/list/?skip=5&limit=5")
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data) == 5
+
+
+def test_get_most_common_words(
+    client: TestClient, db_session: Session, settings: AppSettings
+) -> None:
+    # Create some parts
+    descriptions = [
+        "This is the first test part",
+        "This part is for testing",
+        "Another test part description",
+        "Part of the test suite",
+        "Test the API with this part",
+    ]
+    for i, description in enumerate(descriptions):
+        response = client.post(
+            f"{settings.api_v1_prefix}/parts/create/",
+            json={
+                "name": f"Part {i}",
+                "sku": f"SKU{i}CMM",
+                "description": description,
+                "weight_ounces": i * 5,
+            },
+        )
+        assert response.status_code == 200, response.text
+
+    # get top 5 of words
+    response = client.get(f"{settings.api_v1_prefix}/parts/most_common_words/")
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data) == 5
+    assert data[0]["word"] == "part"
+    assert data[0]["count"] > 1
