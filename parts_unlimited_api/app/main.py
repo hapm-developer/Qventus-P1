@@ -1,16 +1,17 @@
-from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
+from typing import Dict
 
 from app.core.events import create_start_app_handler, create_stop_app_handler
-from app.core.settings.app import AppSettings
+from app.core.settings.development import DevAppSettings
 from app.routers.parts import part_router
+from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
 
 def create_application() -> FastAPI:
     """
     Creates and initializes FastAPI application.
     """
-    settings = AppSettings()
+    settings = DevAppSettings()
     settings.configure_logging()
 
     application = FastAPI(**settings.fastapi_kwargs)
@@ -41,6 +42,7 @@ def create_application() -> FastAPI:
 
 app = create_application()
 
+
 @app.get("/")
-def read_root():
+def read_root() -> Dict[str, str]:
     return {"message": "Welcome to Parts Unlimited API"}
