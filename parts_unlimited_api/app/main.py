@@ -1,9 +1,8 @@
-from typing import Dict
-
 from app.core.events import create_start_app_handler, create_stop_app_handler
 from app.core.settings.development import DevAppSettings
 from app.routers.parts import part_router
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from starlette.middleware.cors import CORSMiddleware
 
 
@@ -44,5 +43,11 @@ app = create_application()
 
 
 @app.get("/")
-def read_root() -> Dict[str, str]:
-    return {"message": "Welcome to Parts Unlimited API"}
+def read_root() -> RedirectResponse:
+    """
+    Redirects to the Swagger documentation page.
+
+    Returns:
+    - RedirectResponse: Redirects to the /docs URL.
+    """
+    return RedirectResponse(url="/docs")
