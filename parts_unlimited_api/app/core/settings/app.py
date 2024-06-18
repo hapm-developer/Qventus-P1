@@ -2,9 +2,8 @@ import logging
 import sys
 from typing import Any, Dict, List, Optional, Tuple
 
-from loguru import logger
-
 from app.core.logging import InterceptHandler
+from loguru import logger
 from pydantic_settings import BaseSettings
 
 
@@ -23,9 +22,9 @@ class AppSettings(BaseSettings):
     # Swagger-related parameters
     # https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
     swagger_ui_parameters: Dict[str, int] = {"defaultModelsExpandDepth": -1}
-    
+
     # Sqlite
-    database_url: str = "sqlite:///./app/db/parts.db"
+    database_url: str
 
     logging_level: int = logging.INFO
     loggers: Tuple[str, str] = ("uvicorn.asgi", "uvicorn.access")
@@ -44,7 +43,7 @@ class AppSettings(BaseSettings):
             "root_path": "",
             "title": self.title,
             "version": self.version,
-            "swagger_ui_parameters": self.swagger_ui_parameters
+            "swagger_ui_parameters": self.swagger_ui_parameters,
         }
 
     def configure_logging(self) -> None:

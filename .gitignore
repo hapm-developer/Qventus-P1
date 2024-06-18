@@ -123,6 +123,7 @@ celerybeat.pid
 
 # Environments
 .env
+.test.env
 .venv
 env/
 venv/
@@ -163,3 +164,6 @@ cython_debug/
 
 # VSCode
 .history/
+
+# db
+db/
