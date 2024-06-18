@@ -3,12 +3,14 @@
 fastapi==0.111.0  # https://github.com/tiangolo/fastapi
 
 pydantic==2.7.4  # https://github.com/pydantic/pydantic
+pydantic-settings==2.3.3 # https://github.com/pydantic/pydantic-settings
 uvicorn==0.30.1  # https://github.com/encode/uvicorn
 python-dotenv==1.0.1  # https://github.com/theskumar/python-dotenv
+uvicorn==0.30.1 # https://github.com/encode/uvicorn
 
 # Logging
 loguru==0.6.0  # https://github.com/Delgan/loguru
 
 # DB
 alembic==1.8.1  # https://github.com/sqlalchemy/alembic
-
+sqlalchemy==2.0.30 # https://github.com/sqlalchemy/sqlalchemy
